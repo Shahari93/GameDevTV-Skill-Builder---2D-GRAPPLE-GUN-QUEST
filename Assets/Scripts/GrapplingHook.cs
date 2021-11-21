@@ -39,6 +39,7 @@ public class GrapplingHook : MonoBehaviour
             {
                 joint.enabled = true;
                 //Challenge 1:
+                joint.connectedBody = hit.collider.gameObject.GetComponent<Rigidbody2D>();
 
                 //Challenge 3:
 
@@ -57,6 +58,7 @@ public class GrapplingHook : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
         {
+            joint.connectedBody = null;
             joint.enabled = false;
             line.enabled = false;
         }
