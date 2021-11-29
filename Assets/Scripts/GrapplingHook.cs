@@ -1,8 +1,6 @@
 ﻿// GameDev.tv Challenge Club. Got questions or want to share your nifty solution?
 // Head over to - http://community.gamedev.tv
 
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GrapplingHook : MonoBehaviour
@@ -26,8 +24,13 @@ public class GrapplingHook : MonoBehaviour
 
     private void Update()
     {
-        PullPlayer();
+        MouseDown();
+        MouseHeldDown();
+        MouseRelease();
+    }
 
+    private void MouseDown()
+    {
         if (Input.GetMouseButtonDown(0))
         {
             targetPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -48,14 +51,23 @@ public class GrapplingHook : MonoBehaviour
                 line.enabled = true;
                 line.SetPosition(0, playerHand.transform.position);
                 line.SetPosition(1, hit.point);
+
             }
         }
+    }
 
+    private void MouseHeldDown()
+    {
         if (Input.GetMouseButton(0))
         {
             line.SetPosition(0, playerHand.transform.position);
-        }
+            PullPlayer();
 
+        }
+    }
+
+    private void MouseRelease()
+    {
         if (Input.GetMouseButtonUp(0))
         {
             joint.connectedBody = null;
@@ -66,6 +78,9 @@ public class GrapplingHook : MonoBehaviour
 
     private void PullPlayer()
     {
-        //Challenge 2:  
+        joint.distance = Vector2.Distance(playerHand.transform.position, hit.point);
+        Vector3 dir = (Vector3)hit.point - transform.position;
+        dir.Normalize();
+        transform.position += dir * grappleSpeed * Time.deltaTime;
     }
 }
