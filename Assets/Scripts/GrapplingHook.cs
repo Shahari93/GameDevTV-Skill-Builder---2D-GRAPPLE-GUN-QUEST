@@ -60,8 +60,8 @@ public class GrapplingHook : MonoBehaviour
     {
         if (Input.GetMouseButton(0))
         {
-            line.SetPosition(0, playerHand.transform.position);
             PullPlayer();
+            line.SetPosition(0, playerHand.transform.position);
 
         }
     }
@@ -70,7 +70,7 @@ public class GrapplingHook : MonoBehaviour
     {
         if (Input.GetMouseButtonUp(0))
         {
-            joint.connectedBody = null;
+            //joint.connectedBody = null;
             joint.enabled = false;
             line.enabled = false;
         }
@@ -79,8 +79,8 @@ public class GrapplingHook : MonoBehaviour
     private void PullPlayer()
     {
         joint.distance = Vector2.Distance(playerHand.transform.position, hit.point);
-        Vector3 dir = (Vector3)hit.point - transform.position;
+        Vector3 dir = (Vector3)hit.point - this.transform.position;
         dir.Normalize();
-        transform.position += dir * grappleSpeed * Time.deltaTime;
+        transform.position += dir * joint.distance * grappleSpeed * Time.deltaTime;
     }
 }
