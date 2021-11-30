@@ -1587,7 +1587,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 55
   line: {fileID: 1682631639}
-  grappleSpeed: 1
+  grappleSpeed: 3
   playerHand: {fileID: 1637264630}
 --- !u!232 &998589711
 DistanceJoint2D:

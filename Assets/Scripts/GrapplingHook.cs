@@ -38,13 +38,15 @@ public class GrapplingHook : MonoBehaviour
 
             hit = Physics2D.Raycast(playerHand.transform.position, targetPos - playerHand.transform.position, distance, mask);
 
-            if (hit.collider != null && hit.collider.gameObject.GetComponent<Rigidbody2D>() != null)
+            if (hit.collider != null && hit.rigidbody != null)
             {
                 joint.enabled = true;
                 //Challenge 1:
-                joint.connectedBody = hit.collider.gameObject.GetComponent<Rigidbody2D>();
+                joint.connectedBody = hit.rigidbody;
 
                 //Challenge 3:
+                joint.connectedAnchor = hit.transform.InverseTransformPoint(hit.point);
+
 
                 joint.distance = Vector2.Distance(playerHand.transform.position, hit.point);
 
@@ -70,7 +72,6 @@ public class GrapplingHook : MonoBehaviour
     {
         if (Input.GetMouseButtonUp(0))
         {
-            //joint.connectedBody = null;
             joint.enabled = false;
             line.enabled = false;
         }
@@ -78,9 +79,6 @@ public class GrapplingHook : MonoBehaviour
 
     private void PullPlayer()
     {
-        joint.distance = Vector2.Distance(playerHand.transform.position, hit.point);
-        Vector3 dir = (Vector3)hit.point - this.transform.position;
-        dir.Normalize();
-        transform.position += dir * joint.distance * grappleSpeed * Time.deltaTime;
+        joint.distance -= Time.deltaTime * grappleSpeed;
     }
 }
