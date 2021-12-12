@@ -1582,6 +1582,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60f6b089e9ae7f64abfa9ce894f8efa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  distBetweenPlayerAndPoint: 0.01
   distance: 5
   mask:
     serializedVersion: 2

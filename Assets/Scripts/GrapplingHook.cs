@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class GrapplingHook : MonoBehaviour
 {
+    [SerializeField] private float distBetweenPlayerAndPoint = 0.01f;
     [SerializeField] private float distance = 10f;
     [SerializeField] private LayerMask mask;
     [SerializeField] private LineRenderer line;
@@ -53,7 +54,6 @@ public class GrapplingHook : MonoBehaviour
                 line.enabled = true;
                 line.SetPosition(0, playerHand.transform.position);
                 line.SetPosition(1, hit.point);
-
             }
         }
     }
@@ -64,7 +64,10 @@ public class GrapplingHook : MonoBehaviour
         {
             PullPlayer();
             line.SetPosition(0, playerHand.transform.position);
-
+            if (joint.distance < distBetweenPlayerAndPoint)
+            {
+                ReleasePlayer(false);
+            }
         }
     }
 
@@ -72,13 +75,18 @@ public class GrapplingHook : MonoBehaviour
     {
         if (Input.GetMouseButtonUp(0))
         {
-            joint.enabled = false;
-            line.enabled = false;
+            ReleasePlayer(false);
         }
     }
 
     private void PullPlayer()
     {
         joint.distance -= Time.deltaTime * grappleSpeed;
+    }
+
+    private void ReleasePlayer(bool enabled)
+    {
+        joint.enabled = enabled;
+        line.enabled = enabled;
     }
 }
