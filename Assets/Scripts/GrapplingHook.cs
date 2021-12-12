@@ -47,8 +47,6 @@ public class GrapplingHook : MonoBehaviour
 
                 //Challenge 3:
                 joint.connectedAnchor = hit.transform.InverseTransformPoint(hit.point);
-
-
                 joint.distance = Vector2.Distance(playerHand.transform.position, hit.point);
 
                 line.enabled = true;
