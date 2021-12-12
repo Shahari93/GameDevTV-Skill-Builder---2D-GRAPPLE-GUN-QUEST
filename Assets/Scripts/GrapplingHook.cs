@@ -2,14 +2,15 @@
 // Head over to - http://community.gamedev.tv
 
 using UnityEngine;
+using System.Collections;
 
 public class GrapplingHook : MonoBehaviour
 {
     [SerializeField] private float distBetweenPlayerAndPoint = 0.01f;
     [SerializeField] private float distance = 10f;
+    [SerializeField] private float grappleSpeed = 3f;
     [SerializeField] private LayerMask mask;
     [SerializeField] private LineRenderer line;
-    [SerializeField] private float grappleSpeed = 3f;
     [SerializeField] private GameObject playerHand;
 
     DistanceJoint2D joint;
@@ -51,7 +52,7 @@ public class GrapplingHook : MonoBehaviour
 
                 line.enabled = true;
                 line.SetPosition(0, playerHand.transform.position);
-                line.SetPosition(1, hit.point);
+                line.SetPosition(1, hit.rigidbody.transform.position);
             }
         }
     }
@@ -61,7 +62,7 @@ public class GrapplingHook : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             PullPlayer();
-            line.SetPosition(0, playerHand.transform.position);
+            line.SetPosition(0, playerHand.transform.position); // moves the line where the player is going
             if (joint.distance < distBetweenPlayerAndPoint)
             {
                 ReleasePlayer(false);
